@@ -1,13 +1,20 @@
 import { useParams } from 'react-router-dom';
 import style from './Pagination.module.scss';
-import classNames from 'classnames/bind';
+import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
-const Pagination = ({currentPage, paginationList, totalPage, isFavoriteList}) => {
+type TPagination = {
+    currentPage: number;
+    paginationList: number[];
+    totalPage: number;
+    isFavoriteList: boolean;
+}
+
+const Pagination = ({currentPage, paginationList, totalPage, isFavoriteList}: TPagination) => {
 
     const {breedName, subBreedName} = useParams();
 
-    let url;
+    let url = "";
 
     if(!isFavoriteList) {
         if(subBreedName) {

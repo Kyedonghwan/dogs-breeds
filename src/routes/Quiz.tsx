@@ -1,14 +1,14 @@
 import ContinueGuide from "../components/ContinueGuide";
 import StartGuide from "../components/StartGuide";
 import EndGuide from "../components/EndGuide";
-import React, {  useState } from 'react';
+import {  useState } from 'react';
 import { answerNumberContext } from "../context/answerNumberContext";
 
 const Quiz = () => {
     const [quizStatus, setStatus] = useState('before');
     const [answer, setAnswer] = useState(0);
 
-    const handleStatus = (status) => {
+    const handleStatus = (status: string) => {
       setStatus(status);
     }
 

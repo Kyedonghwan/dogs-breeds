@@ -8,7 +8,7 @@ const cx = classNames.bind(style);
 const Gnb = () => {
     const [activeMenu, setActiveMenu] = useState('Home');
     
-    const handleMenuClick = (menu) => {
+    const handleMenuClick = (menu: string) => {
       setActiveMenu(menu);
     }
 

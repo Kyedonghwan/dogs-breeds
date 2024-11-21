@@ -1,9 +1,10 @@
 import style from './CenterGuide.module.scss';
-import classNames from "classnames";
 
-const cx = classNames.bind(style);
+type TProps = {
+  children: React.ReactNode
+}
 
-const CenterGuide = ({children}) => {
+const CenterGuide = ({children}:TProps) => {
   return (
     <div className={style.wrap}>
       {children}

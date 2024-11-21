@@ -4,7 +4,12 @@ import { Link } from 'react-router-dom';
 
 const FavoriteList = () => {
 
-    const [breedNameArray, setBreedNameArray] = useState([]);
+    type TBreedName = {
+        breedName: string;
+        subBreedName: string;
+    }
+
+    const [breedNameArray, setBreedNameArray] = useState<TBreedName[]>([]);
 
     useEffect(() => {
         const keys = Object.keys(window.localStorage);

@@ -2,7 +2,15 @@ import classNames from 'classnames';
 import style from './ImageItem.module.scss';
 import { useEffect, useMemo, useState } from 'react';
 
-const ImageItem = ({imageUrl, favorites, setFavorites, breedFullName, isFavoriteList}) => {
+type TImageItem = {
+    imageUrl: string,
+    favorites: string[],
+    setFavorites: (item: string[]) => void,
+    breedFullName: string,
+    isFavoriteList: boolean
+}
+
+const ImageItem = ({imageUrl, favorites, setFavorites, breedFullName, isFavoriteList}:TImageItem) => {
 
     const [isFavorite, setIsFavorite] = useState(false);
 

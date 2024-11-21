@@ -4,8 +4,10 @@ import Button from '../Button';
 import { useContext } from 'react';
 import { answerNumberContext } from "../../context/answerNumberContext";
 
-const EndGuide = ({onClick}) => {
-  const {answer} = useContext(answerNumberContext);
+const onClick = () => {};
+
+const EndGuide = () => {
+    const {answer} = useContext(answerNumberContext);
 
   return (
     <CenterGuide>

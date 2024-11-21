@@ -6,10 +6,10 @@ import ImageList from "../components/ImageList";
 const Breeds = () => {
     const [keyword, setKeyword] = useState("");
     const [imageListHeight, setImageListHeight] = useState(0);
-    const imageListRef = useRef(null);
+    const imageListRef = useRef<HTMLUListElement>(null);
 
     useEffect(() => {
-        let current;
+        let current: HTMLUListElement;
 
         const observer = new ResizeObserver(entries => {
             for(let entry of entries) {
@@ -26,7 +26,7 @@ const Breeds = () => {
 
         return () => {
             if(current) {
-                observer.disconnect(current);
+                observer.disconnect();
             }
         }
     },[]);
@@ -34,7 +34,7 @@ const Breeds = () => {
     return (
     <div className={style.breeds_wrap}>
         <SearchList keyword={keyword} setKeyword={setKeyword} imageListHeight={imageListHeight} />
-        <ImageList keyword={keyword} imageListRef={imageListRef} setImageListHeight={setImageListHeight}/>
+        <ImageList imageListRef={imageListRef} isFavoriteList={false}/>
     </div>
     )
 }

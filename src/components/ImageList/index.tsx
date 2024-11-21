@@ -5,14 +5,19 @@ import ImageItem from '../ImageItem';
 import Pagination from '../Pagination';
 import { useSearchParams } from 'react-router-dom';
 
-const ImageList = ({isFavoriteList, imageListRef}) => {
+type TImageList = {
+    isFavoriteList: boolean;
+    imageListRef?: React.RefObject<HTMLUListElement>
+}
+
+const ImageList = ({isFavoriteList, imageListRef}: TImageList) => {
     const {breedName, subBreedName} = useParams();
-    const [imageList, setImageList] = useState([]);
-    const [favorites, setFavorites] = useState([]);
+    const [imageList, setImageList] = useState<string[]>([]);
+    const [favorites, setFavorites] = useState<string[]>([]);
     const [breedFullName, setBreedFullName] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
-    const [paginationList, setPaginationList] = useState([]);
+    const [paginationList, setPaginationList] = useState<number[]>([]);
     const [searchParams] = useSearchParams();
 
     const imageCountPerPage = 9;
@@ -50,9 +55,9 @@ const ImageList = ({isFavoriteList, imageListRef}) => {
             let localData;
 
             if(subBreedName) {
-                localData = JSON.parse(window.localStorage.getItem(subBreedName + " " + breedName));
+                localData = JSON.parse(window.localStorage.getItem(subBreedName + " " + breedName)!);
             } else {
-                localData = JSON.parse(window.localStorage.getItem(breedName));
+                localData = JSON.parse(window.localStorage.getItem(breedName + "")!);
             }
             
             setTotalPage(Math.ceil(localData.length / imageCountPerPage));
@@ -102,7 +107,7 @@ const ImageList = ({isFavoriteList, imageListRef}) => {
     },[totalPage, currentPage]);
 
     useEffect(() => {
-        setFavorites(JSON.parse(window.localStorage.getItem(breedFullName)));
+        setFavorites(JSON.parse(window.localStorage.getItem(breedFullName) + ""));
     }, [breedFullName]);
 
     return (

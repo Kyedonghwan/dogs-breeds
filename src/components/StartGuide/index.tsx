@@ -2,7 +2,11 @@ import Button from '../Button';
 import CenterGuide from '../CenterGuide';
 import style from './StartGuide.module.scss';
 
-const StartGuide = ({onClick}) => {
+type TStartGuid = {
+  onClick : (e:React.MouseEvent) => void;
+}
+
+const StartGuide = ({onClick}: TStartGuid) => {
   return (
     <CenterGuide>
       <strong className={style.title}>Quiz를 풀어보세요!</strong>

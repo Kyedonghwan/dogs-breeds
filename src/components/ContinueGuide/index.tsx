@@ -12,7 +12,7 @@ const ContinueGuide = () => {
   const [idx, setIndex] = useState(0);
   const { setAnswer, setStatus } = useContext(answerNumberContext);
 
-  const handleCount = (direction) => {
+  const handleCount = (direction: string) => {
     const answerAnimal = QUESTION_LIST[count - 1].name;
     const myCheckAnswerAnimal = QUESTION_LIST[count - 1].choice[idx].replace(/[0-9]. /g, '');
     
@@ -32,7 +32,7 @@ const ContinueGuide = () => {
     }
   }
 
-  const handleItem = (index) => {
+  const handleItem = (index: number) => {
     setIndex(index);
   }
 

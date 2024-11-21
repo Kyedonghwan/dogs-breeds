@@ -1,13 +1,23 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import style from './SearchList.module.scss';
 import { Link } from 'react-router-dom';
 import Input from '../Input';
 
-const SearchList = ({keyword, setKeyword, imageListHeight}) => {
-    const [allBreeds, setAllBreeds] = useState({});
-    const [searchBreeds, setSearchBreeds] = useState({});
+type TSearchList = {
+    keyword: string;
+    setKeyword: (keyword: string) => void;
+    imageListHeight: number;
+}
 
-    const onChange = (e) => {
+type TAllBreeds = {
+    [key: string]: string[]
+}
+
+const SearchList = ({keyword, setKeyword, imageListHeight}: TSearchList) => {
+    const [allBreeds, setAllBreeds] = useState<TAllBreeds>({});
+    const [searchBreeds, setSearchBreeds] = useState<TAllBreeds>({});
+
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setKeyword(e.target.value);
     }
 
@@ -16,28 +26,31 @@ const SearchList = ({keyword, setKeyword, imageListHeight}) => {
         setAllBreeds(json.message);
     }
 
-    const SearchItem = ({name}) => {
+    type TSearchItem = {name: string;}
+
+    const SearchItem = ({name}: TSearchItem) => {
         const lowerName = name.toLowerCase();
         const lowerKeyword = keyword.toLowerCase();
 
         if (lowerName.includes(lowerKeyword)) {
             const matchText = name.split(new RegExp(`(${keyword})`, 'gi'));
-            return matchText.map((text, idx) => text.toLowerCase() === lowerKeyword ? <span key={idx} className={style.type_highlight}>{text}</span> : text);
+            return <>{matchText.map((text, idx) => text.toLowerCase() === lowerKeyword ? <span key={idx} className={style.type_highlight}>{text}</span> : text)}</>
         }
 
-        return name;
+        return <>{name}</>;
     }
 
     useEffect(() => {
         const searchBreed = () => {
 
-            let temp = [];
+            let temp : TAllBreeds = {};
     
             for (const [breedName, subBreedNameArray] of Object.entries(allBreeds)) {
                 if(breedName.toLowerCase().includes(keyword.toLowerCase())) {
                     temp[breedName] = subBreedNameArray;
                 } else {
-                    subBreedNameArray.some((subBreedName, temp) => {
+                    // eslint-disable-next-line
+                    subBreedNameArray.some((subBreedName) => {
                         if (subBreedName.toLowerCase().includes(keyword.toLowerCase())) {
                             temp[breedName] = [subBreedName];
                             return true;
@@ -67,7 +80,7 @@ const SearchList = ({keyword, setKeyword, imageListHeight}) => {
               <Input value={keyword} type="text" onChange={onChange} placeholder="type breeds name..." />
               <button type="button" className={style.search_button} />
             </div>
-            <ul className={style.list} style={{ height: imageListHeight > 0 && imageListHeight}}>
+            <ul className={style.list} style={{ height: imageListHeight > 0 ? imageListHeight : undefined}}>
                 {
                     Object.keys(searchBreeds).map((breedName, idx) => 
                         <li key={idx} className={style.outter_item}>

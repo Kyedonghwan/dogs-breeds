@@ -3,7 +3,13 @@ import classNames from 'classnames/bind';
 
 const cx = classNames.bind(style);
 
-function Button({text, onClick, customStyle}) {
+type TProps = {
+  text: string,
+  onClick: (e: React.MouseEvent) => void,
+  customStyle?: {marginTop: string},
+}
+
+function Button({text, onClick, customStyle}: TProps) {
   return (
     <button type="button" onClick={onClick} className={cx('wrap')} style={customStyle}>{text}</button>
   )

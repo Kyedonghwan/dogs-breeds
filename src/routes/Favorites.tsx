@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ImageList from "../components/ImageList";
 import FavoriteList from "../components/FavoriteList";
 
