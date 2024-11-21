@@ -5,15 +5,20 @@ import ImageItem from '../ImageItem';
 import Pagination from '../Pagination';
 import { useSearchParams } from 'react-router-dom';
 
+export type TFavorites = {
+    name: string;
+    imageUrls?: string[];
+}
+
 type TImageList = {
-    isFavoriteList: boolean;
-    imageListRef?: React.RefObject<HTMLUListElement>
+    isFavoriteList : boolean;
+    imageListRef?: React.RefObject<HTMLUListElement>;
 }
 
 const ImageList = ({isFavoriteList, imageListRef}: TImageList) => {
     const {breedName, subBreedName} = useParams();
     const [imageList, setImageList] = useState<string[]>([]);
-    const [favorites, setFavorites] = useState<string[]>([]);
+    const [favorites, setFavorites] = useState<TFavorites>({name: ""});
     const [breedFullName, setBreedFullName] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
@@ -52,20 +57,32 @@ const ImageList = ({isFavoriteList, imageListRef}: TImageList) => {
 
         // favorites
         const getLocalStorageImage = () => {
-            let localData;
+            let localData: string[] | undefined;
 
             if(subBreedName) {
-                localData = JSON.parse(window.localStorage.getItem(subBreedName + " " + breedName)!);
+                JSON.parse(window.localStorage.getItem("breeds") || "[]").some((item:TFavorites) => {
+                    if(item.name === subBreedName + " " + breedName) {
+                        localData = item.imageUrls;
+                        return true;
+                    }
+                });
             } else {
-                localData = JSON.parse(window.localStorage.getItem(breedName + "")!);
+                JSON.parse(window.localStorage.getItem("breeds") || "[]").some((item:TFavorites) => {
+                    if(item.name ===  breedName) {
+                        localData = item.imageUrls;
+                        return true;
+                    }
+                });
             }
             
-            setTotalPage(Math.ceil(localData.length / imageCountPerPage));
-            // 현재페이지 = 전체페이지
-            if(currentPage === Math.ceil(localData.length / imageCountPerPage)) {
-                setImageList(localData.slice((currentPage -1) * imageCountPerPage));
-            } else {
-                setImageList(localData.slice((currentPage -1) * imageCountPerPage, currentPage * imageCountPerPage))
+            if(localData) {
+                setTotalPage(Math.ceil(localData.length / imageCountPerPage));
+                // 현재페이지 = 전체페이지
+                if(currentPage === Math.ceil(localData.length / imageCountPerPage)) {
+                    setImageList(localData.slice((currentPage -1) * imageCountPerPage));
+                } else {
+                    setImageList(localData.slice((currentPage -1) * imageCountPerPage, currentPage * imageCountPerPage))
+                }
             }
         }
 
@@ -107,7 +124,13 @@ const ImageList = ({isFavoriteList, imageListRef}: TImageList) => {
     },[totalPage, currentPage]);
 
     useEffect(() => {
-        setFavorites(JSON.parse(window.localStorage.getItem(breedFullName) + ""));
+        
+        JSON.parse(window.localStorage.getItem("breeds") || "[]")?.some((item:TFavorites) => {
+            if(item.name === breedFullName) {
+                setFavorites(item);
+                return true;
+            }
+        });
     }, [breedFullName]);
 
     return (

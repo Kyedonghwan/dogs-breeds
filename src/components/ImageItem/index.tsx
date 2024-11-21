@@ -1,39 +1,60 @@
 import classNames from 'classnames';
 import style from './ImageItem.module.scss';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { TFavorites } from '../ImageList';
 
 type TImageItem = {
-    imageUrl: string,
-    favorites: string[],
-    setFavorites: (item: string[]) => void,
-    breedFullName: string,
-    isFavoriteList: boolean
+    imageUrl: string;
+    favorites: TFavorites;
+    setFavorites: (favorites: TFavorites) => void;
+    breedFullName: string;
+    isFavoriteList: boolean;
 }
 
-const ImageItem = ({imageUrl, favorites, setFavorites, breedFullName, isFavoriteList}:TImageItem) => {
+const ImageItem = ({imageUrl, favorites, setFavorites, breedFullName, isFavoriteList}: TImageItem) => {
 
     const [isFavorite, setIsFavorite] = useState(false);
 
-    useMemo(() => favorites, [favorites]);
-
     const onClick = () => {
+        let localStorageArray = JSON.parse(window.localStorage.getItem("breeds") || '[]');
+
+        let temp = [];
+
         if(!isFavorite){
-            if(favorites) {
-                window.localStorage.setItem(breedFullName, JSON.stringify([...favorites, imageUrl]));
-                setFavorites([...favorites, imageUrl]);
+            if(favorites.imageUrls) {
+                localStorageArray.some((item:TFavorites, idx:number) => {
+                    if(item.name === breedFullName) {
+                        localStorageArray[idx] = {name: breedFullName, imageUrls: [...favorites.imageUrls || [], imageUrl]};
+                        return true;
+                    }
+                })
+                window.localStorage.setItem("breeds", JSON.stringify(localStorageArray));
+                setFavorites({name: breedFullName, imageUrls: [...favorites.imageUrls, imageUrl]});
             } else {
-                window.localStorage.setItem(breedFullName, JSON.stringify([imageUrl]));
-                setFavorites([imageUrl]);
+                temp = [...localStorageArray, {name: breedFullName, imageUrls: [imageUrl]}];
+                window.localStorage.setItem("breeds", JSON.stringify(temp))
+                setFavorites({name: breedFullName, imageUrls: [imageUrl]});
             }
             setIsFavorite(true);
         } else {
-            if(favorites.length > 1) {
-                window.localStorage.setItem(breedFullName, JSON.stringify(favorites.filter(favorite => favorite !== imageUrl)));
+            if(favorites.imageUrls && favorites.imageUrls.length > 1) {
+                localStorageArray.some((item:TFavorites, idx:number) => {
+                    if(item.name === breedFullName) {
+                        localStorageArray[idx] = {name: breedFullName, imageUrls: favorites.imageUrls?.filter((imageItem) => imageItem!==imageUrl)}
+                        return true;
+                    }
+                })
+                console.log(localStorageArray);
+                window.localStorage.setItem("breeds", JSON.stringify(localStorageArray));
+                setFavorites({name: breedFullName, imageUrls: favorites.imageUrls.filter((item) => item!==imageUrl)});
             }
             else {
-                window.localStorage.removeItem(breedFullName);
+                window.localStorage.setItem("breeds", JSON.stringify(localStorageArray.filter((item:TFavorites) => item.name!==breedFullName)))
+                if(window.localStorage.getItem("breeds") === "[]") {
+                    window.localStorage.removeItem("breeds");
+                }
+                setFavorites({name: ""});
             }
-            setFavorites(favorites.filter(favorite => favorite !== imageUrl));
             setIsFavorite(false);
         }
     }
@@ -41,8 +62,8 @@ const ImageItem = ({imageUrl, favorites, setFavorites, breedFullName, isFavorite
     useEffect(() => {
         if(!isFavoriteList) {
             setIsFavorite(false);
-            if(favorites) {
-                favorites.forEach((favoriteImageUrl) => {
+            if(favorites.imageUrls) {
+                favorites.imageUrls.forEach((favoriteImageUrl) => {
                     if(favoriteImageUrl === imageUrl) {
                         setIsFavorite(true);
                         return false;

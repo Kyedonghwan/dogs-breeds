@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import style from './FavoriteList.module.scss';
 import { Link } from 'react-router-dom';
+import { TFavorites } from '../ImageList';
 
 const FavoriteList = () => {
 
@@ -12,15 +13,16 @@ const FavoriteList = () => {
     const [breedNameArray, setBreedNameArray] = useState<TBreedName[]>([]);
 
     useEffect(() => {
-        const keys = Object.keys(window.localStorage);
-        const temp = keys.map((item) => {
-            if(item.indexOf(" ") === -1) {
-                return {breedName: item, subBreedName: ""}
-            } else {
-                return {breedName: item.substring(0, item.indexOf(" ")), subBreedName: item.substring(item.indexOf(" ") + 1)}
-            }
-        })
-        setBreedNameArray(temp);
+        if(window.localStorage.getItem("breeds")) {
+            const temp = JSON.parse(window.localStorage.getItem("breeds") + "").map((item: TFavorites) => {
+                if(item.name.indexOf(" ") === -1) {
+                    return {breedName: item.name, subBreedName: ""}
+                } else {
+                    return {breedName: item.name.substring(0, item.name.indexOf(" ")), subBreedName: item.name.substring(item.name.indexOf(" ") + 1)}
+                }
+            })
+            setBreedNameArray(temp);
+        }
     }, []);
 
     return (
