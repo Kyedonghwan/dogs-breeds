@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Kyedonghwan.github.io/dogs-breeds/static/css/main.7f6cdb21.css",
+    "main.js": "/Kyedonghwan.github.io/dogs-breeds/static/js/main.d95c6851.js",
+    "index.html": "/Kyedonghwan.github.io/dogs-breeds/index.html",
+    "main.7f6cdb21.css.map": "/Kyedonghwan.github.io/dogs-breeds/static/css/main.7f6cdb21.css.map",
+    "main.d95c6851.js.map": "/Kyedonghwan.github.io/dogs-breeds/static/js/main.d95c6851.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7f6cdb21.css",
+    "static/js/main.d95c6851.js"
+  ]
+}
