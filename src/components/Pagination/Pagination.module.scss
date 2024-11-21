@@ -1,0 +1,39 @@
+.list_wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list {
+    display: flex;
+    margin: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.item {
+    & + .item {
+        margin-left: 20px;
+    }
+}
+
+.page_link {
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+
+    &.on {
+        font-weight: 700;
+        text-decoration: underline;
+        pointer-events: none;
+    }
+}
+
+.arrow_link {
+    font-size: 15px;
+    padding: 5px;
+
+    & + .arrow_link {
+        margin-left: 10px;
+    }
+}

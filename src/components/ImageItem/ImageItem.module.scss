@@ -1,0 +1,39 @@
+.item {
+    box-sizing: border-box;
+    list-style: none;
+    width: 33.3333%;
+    padding: 10px;
+}
+
+.thumb_wrap {
+    position: relative;
+    padding-top: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.thumb {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    content: "";
+}
+
+.like_icon {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    width: 24px;
+    height: 24px;
+    background: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient x1='100%25' y1='12.193%25' x2='0%25' y2='87.807%25' id='a'%3E%3Cstop stop-color='%23FB4B6C' offset='0%25'/%3E%3Cstop stop-color='%23FB105D' offset='100%25'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M0 0h24v24H0z'/%3E%3Cpath d='M16.632 2.75c1.436 0 2.87.56 3.967 1.677a5.785 5.785 0 0 1 1.651 4.065c0 1.472-.55 2.944-1.652 4.068l-8.075 8.263c-.281.286-.65.43-1.028.427a1.41 1.41 0 0 1-1.017-.426L2.401 12.56A5.792 5.792 0 0 1 .75 8.492c0-1.47.55-2.942 1.65-4.065A5.54 5.54 0 0 1 6.369 2.75a5.54 5.54 0 0 1 3.967 1.677L11.5 5.614l1.165-1.187a5.539 5.539 0 0 1 3.967-1.677z' stroke='url(%23a)' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E") no-repeat;
+
+    &.on {
+        background: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient x1='89.971%25' y1='0%25' x2='10.029%25' y2='100%25' id='a'%3E%3Cstop stop-color='%23FF025A' offset='0%25'/%3E%3Cstop stop-color='%23A80D56' offset='100%25'/%3E%3C/linearGradient%3E%3ClinearGradient x1='10.029%25' y1='0%25' x2='89.971%25' y2='100%25' id='b'%3E%3Cstop stop-color='%23F75B89' offset='0%25'/%3E%3Cstop stop-color='%23FF4776' offset='100%25'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M0 0h24v24H0z'/%3E%3Cpath d='M16.632 2c-1.63 0-3.26.634-4.503 1.902L6.983 9.147c-2.487 2.537-2.487 6.649 0 9.185l2.959 3.016a2.155 2.155 0 0 0 3.087 0l8.105-8.264c2.488-2.537 2.488-6.647 0-9.182A6.285 6.285 0 0 0 16.632 2z' fill='url(%23a)'/%3E%3Cpath d='M6.368 2c-1.63 0-3.26.634-4.503 1.902-2.487 2.535-2.487 6.645 0 9.182l8.105 8.264a2.155 2.155 0 0 0 3.088 0l2.959-3.016c2.487-2.536 2.487-6.648 0-9.185L10.87 3.902A6.286 6.286 0 0 0 6.368 2z' fill='url(%23b)'/%3E%3C/g%3E%3C/svg%3E") no-repeat
+    }
+}
